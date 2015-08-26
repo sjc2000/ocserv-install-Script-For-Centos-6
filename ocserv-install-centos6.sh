@@ -43,7 +43,7 @@ function ConfigEnvironmentVariable {
     #安装系统组件
     yum install -y -q net-tools bind-utils
     #获取网卡接口名称
-    ethlist=$(ifconfig | grep ": flags" | cut -d ":" -f1)
+    ethlist=$(ifconfig | grep "Link encap" | cut -d " " -f1)
     eth=$(printf "${ethlist}\n" | head -n 1)
     if [[ $(printf "${ethlist}\n" | wc -l) -gt 2 ]]; then
         echo ======================================
@@ -153,13 +153,23 @@ function CompileOcserv {
 	cd libnl-3.2.25
 	./configure && make && make install
 	cd ..
+	#编译安装start-stop-dameon
+	wget http://ftp.de.debian.org/debian/pool/main/d/dpkg/dpkg_1.18.2.tar.xz
+	tar -xvf dpkg_1.18.2.tar.xz
+	cd dpkg-1.18.2
+	./configure
+	make
+	cd utils
+	make
+	cp -f start-stop-daemon /usr/bin/start-stop-daemon
+	cd ..
     #下载ocserv并编译安装
     wget -t 0 -T 60 "ftp://ftp.infradead.org/pub/ocserv/ocserv-${version}.tar.xz"
     tar axf ocserv-${version}.tar.xz
     cd ocserv-${version}
     sed -i 's/#define MAX_CONFIG_ENTRIES.*/#define MAX_CONFIG_ENTRIES 200/g' src/vpn.h
     ./configure && make && make install
-
+	
     #复制配置文件样本
     mkdir -p "${confdir}"
     cp "doc/sample.config" "${confdir}/ocserv.conf"
@@ -223,6 +233,7 @@ _EOF_
     sed -i "s/dns = 192.168.1.2/dns = 8.8.8.8\ndns = 8.8.4.4/g" "${confdir}/ocserv.conf"
     sed -i "s/run-as-group = daemon/run-as-group = nobody/g" "${confdir}/ocserv.conf"
     sed -i "s/cookie-timeout = 300/cookie-timeout = 86400/g" "${confdir}/ocserv.conf"
+	sed -i "s/isolate-workers = true/isolate-workers = false/g" "${confdir}/ocserv.conf"
     sed -i 's$route = 192.168.1.0/255.255.255.0$#route = 192.168.1.0/255.255.255.0$g' "${confdir}/ocserv.conf"
     sed -i 's$route = 192.168.5.0/255.255.255.0$#route = 192.168.5.0/255.255.255.0$g' "${confdir}/ocserv.conf"
 
