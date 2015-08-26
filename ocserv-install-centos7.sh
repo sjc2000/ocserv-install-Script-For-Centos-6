@@ -2,9 +2,10 @@
 ####################################################
 #                                                  #
 # This is a ocserv installation for CentOS 7       #
-# Version: 1.2.3 20150508                          #
+# Version: 20150926-0001                           #
 # Author: Travis Lee                               #
-# Website: https://www.stunnel.info                #
+# Author: Yvonne Lu                                #
+# Website: https://noname.space                    #
 #                                                  #
 ####################################################
 
@@ -180,8 +181,8 @@ function ConfigOcserv {
         certtool --generate-privkey --outfile ca-key.pem
 
         cat << _EOF_ >ca.tmpl
-cn = "stunnel.info VPN"
-organization = "stunnel.info"
+cn = "LunaDream CA"
+organization = "LunaDream Foundation"
 serial = 1
 expiration_days = 3650
 ca
@@ -195,8 +196,8 @@ _EOF_
         certtool --generate-privkey --outfile ${serverkey}
 
         cat << _EOF_ >server.tmpl
-cn = "stunnel.info VPN"
-o = "stunnel"
+cn = "LunaDream VPN"
+o = "LunaDream Foundation"
 serial = 2
 expiration_days = 3650
 signing_key
