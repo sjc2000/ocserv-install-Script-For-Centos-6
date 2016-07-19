@@ -125,6 +125,8 @@ function CompileOcserv {
     #升级系统
     #yum update -y -q
     yum install -y -q epel-release
+    #安装编译所需文件
+    yum -y groupinstall 'Development Tools'
     #安装ocserv依赖组件
     yum -y install autoconf automake gcc libtasn1-devel zlib zlib-devel trousers trousers-devel gmp-devel gmp xz texinfo libnl-devel libnl tcp_wrappers-libs tcp_wrappers-devel tcp_wrappers dbus dbus-devel ncurses-devel pam-devel readline-devel bison bison-devel flex expat-devel
     	#编译安装GNU Nettle
@@ -168,6 +170,7 @@ function CompileOcserv {
 	tar -xvf protobuf-2.6.1.tar.gz
 	cd protobuf-2.6.1
 	./configure && make && make install
+	export LD_LIBRARY_PATH=/usr/local/lib/
 	cd ..
 	#编译安装protobuf-c
 	wget https://github.com/protobuf-c/protobuf-c/releases/download/v1.2.1/protobuf-c-1.2.1.tar.gz
