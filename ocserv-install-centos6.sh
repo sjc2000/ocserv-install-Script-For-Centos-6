@@ -179,10 +179,8 @@ function CompileOcserv {
 	./configure && make && make install
 	cd ..
 	#rpm安装libev4 libev-devel
-	wget ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/rudi_m/CentOS_CentOS-6/x86_64/libev4-4.15-7.1.x86_64.rpm
-	wget ftp://ftp.gwdg.de/opensuse/repositories/home:/tsariounov:/tools/CentOS_CentOS-6/x86_64/libev-devel-4.15-21.1.x86_64.rpm
-	rpm -ivh libev4-4.15-7.1.x86_64.rpm
-	rpm -ivh libev-devel-4.15-21.1.x86_64.rpm
+	rpm -ivh ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/rudi_m/CentOS_CentOS-6/x86_64/libev4-4.15-7.1.x86_64.rpm
+	rpm -ivh ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/tsariounov:/tools/CentOS_CentOS-6/x86_64/libev-devel-4.15-21.1.x86_64.rpm
     #下载ocserv并编译安装
     wget -t 0 -T 60 "ftp://ftp.infradead.org/pub/ocserv/ocserv-${version}.tar.xz"
     tar axf ocserv-${version}.tar.xz
