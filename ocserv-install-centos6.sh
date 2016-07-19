@@ -165,6 +165,7 @@ function CompileOcserv {
 	make
 	cp -f start-stop-daemon /usr/bin/start-stop-daemon
 	cd ..
+	cd ..
 	#编译安装protobuf
 	wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz
 	tar -xvf protobuf-2.6.1.tar.gz
@@ -178,6 +179,7 @@ function CompileOcserv {
 	cd protobuf-c-1.2.1
 	./configure && make && make install
 	cd ..
+	ldconfig
 	#rpm安装libev4 libev-devel
 	rpm -ivh ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/rudi_m/CentOS_CentOS-6/x86_64/libev4-4.15-7.1.x86_64.rpm
 	rpm -ivh ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/tsariounov:/tools/CentOS_CentOS-6/x86_64/libev-devel-4.15-21.1.x86_64.rpm
