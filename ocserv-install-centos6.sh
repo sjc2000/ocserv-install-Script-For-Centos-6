@@ -2,9 +2,9 @@
 ####################################################
 #                                                  #
 # This is a ocserv installation for CentOS 6       #
-# Version: 20150826-001                            #
-# Author: Yvonne Lu                                #
-# Website: https://noname.space                    #
+# Version: 20160719-001                            #
+# Author: Gnattu OC                                #
+# Website: https://gnattu.ml                       #
 #                                                  #
 ####################################################
 
@@ -26,7 +26,7 @@ cd ${basepath}
 
 function ConfigEnvironmentVariable {
     #ocserv版本
-    ocserv_version=0.10.4
+    ocserv_version=0.11.3
     version=${1-${ocserv_version}}
     libtasn1_version=4.5
     #变量设置
@@ -58,8 +58,8 @@ function ConfigEnvironmentVariable {
         fi
     fi
 
-    #端口，默认是10443
-    port=10443
+    #端口，默认是12450
+    port=12450
     echo "Please input the port ocserv listen to."
     printf "Default port is \e[33m${port}\e[0m, let it blank to use default port: "
     read porttmp
@@ -127,7 +127,7 @@ function CompileOcserv {
     yum install -y -q epel-release
     #安装ocserv依赖组件
     yum -y install autoconf automake gcc libtasn1-devel zlib zlib-devel trousers trousers-devel gmp-devel gmp xz texinfo libnl-devel libnl tcp_wrappers-libs tcp_wrappers-devel tcp_wrappers dbus dbus-devel ncurses-devel pam-devel readline-devel bison bison-devel flex expat-devel
-    #编译安装GNU Nettle
+    	#编译安装GNU Nettle
 	wget http://ftp.gnu.org/gnu/nettle/nettle-2.7.1.tar.gz
 	tar zxf nettle-2.7.1.tar.gz && cd nettle-2.7.1
 	./configure --prefix=/usr && make
@@ -163,6 +163,23 @@ function CompileOcserv {
 	make
 	cp -f start-stop-daemon /usr/bin/start-stop-daemon
 	cd ..
+	#编译安装protobuf
+	wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz
+	tar -xvf protobuf-2.6.1.tar.gz
+	cd protobuf-2.6.1
+	./configure && make && make install
+	cd ..
+	#编译安装protobuf-c
+	wget https://github.com/protobuf-c/protobuf-c/releases/download/v1.2.1/protobuf-c-1.2.1.tar.gz
+	tar -xvf protobuf-c-1.2.1.tar.gz
+	cd protobuf-c-1.2.1
+	./configure && make && make install
+	cd ..
+	#rpm安装libev4 libev-devel
+	wget ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/rudi_m/CentOS_CentOS-6/x86_64/libev4-4.15-7.1.x86_64.rpm
+	wget ftp://ftp.gwdg.de/opensuse/repositories/home:/tsariounov:/tools/CentOS_CentOS-6/x86_64/libev-devel-4.15-21.1.x86_64.rpm
+	rpm -ivh libev4-4.15-7.1.x86_64.rpm
+	rpm -ivh libev-devel-4.15-21.1.x86_64.rpm
     #下载ocserv并编译安装
     wget -t 0 -T 60 "ftp://ftp.infradead.org/pub/ocserv/ocserv-${version}.tar.xz"
     tar axf ocserv-${version}.tar.xz
