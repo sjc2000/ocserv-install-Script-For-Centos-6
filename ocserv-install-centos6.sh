@@ -276,7 +276,7 @@ if [ $? -ne 0 ]; then
     iptables -t nat -A POSTROUTING -s 192.168.8.0/21 -o ${eth} -j MASQUERADE
     service iptables save
 else
-    printf "\e[33mWARNING!!! Either firewalld or iptables is NOT Running! \e[0m\n"
+    printf "\e[33mWARNING!!! iptables is NOT Running! \e[0m\n"
 fi
 }
 
