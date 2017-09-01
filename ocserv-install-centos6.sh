@@ -193,7 +193,7 @@ function CompileOcserv {
     #复制配置文件样本
     mkdir -p "${confdir}"
     cp "doc/sample.config" "${confdir}/ocserv.conf"
-    wget https://gist.github.com/kevinzhow/9661623/raw/eb8bc8292f7e7b708b2baafe19ecd616155220a1/ocserv -O /etc/init.d/ocserv
+    wget https://gist.githubusercontent.com/sjc2000/dffff1b859f141bb22c1f221c41db558/raw/eb8bc8292f7e7b708b2baafe19ecd616155220a1/ocserv -O /etc/init.d/ocserv
 	chmod 755 /etc/init.d/ocserv
     cd ${basepath}
 }
