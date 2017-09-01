@@ -267,17 +267,17 @@ _EOF_
 
 function ConfigFirewall {
 
-/sbin/service iptables status 1>/dev/null 2>&1
+#/sbin/service iptables status 1>/dev/null 2>&1
 
-if [ $? -ne 0 ]; then
+#if [ $? -ne 0 ]; then
     iptables -I INPUT -p tcp --dport ${port} -j ACCEPT
     iptables -I INPUT -p udp --dport ${port} -j ACCEPT
     iptables -A FORWARD -s 192.168.8.0/21 -j ACCEPT
     iptables -t nat -A POSTROUTING -s 192.168.8.0/21 -o ${eth} -j MASQUERADE
     service iptables save
-else
-    printf "\e[33mWARNING!!! iptables is NOT Running! \e[0m\n"
-fi
+#else
+#    printf "\e[33mWARNING!!! iptables is NOT Running! \e[0m\n"
+#fi
 }
 
 function ConfigSystem {
